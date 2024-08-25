@@ -24,7 +24,7 @@
 
 
     const view = (articles) => {
-        result = ''; // Asegúrate de inicializar result
+        result = ''; //inicializar result
         articles.forEach(article => {
             result += 
                     `<tr>
@@ -64,7 +64,6 @@ fetch(url)
                 })
                 .then(res => res.json() )
                 .then(()=> location.reload())
-              //alertify.success('Ok,tarea eliminada 😌')
             },
             function(){
               alertify.error('Cancel 😎')
@@ -93,7 +92,6 @@ fetch(url)
         modalArticle.show()
     });
 
-    //crear y editar 
     formArticle.addEventListener('submit', (e) => {
         e.preventDefault();
         const status = document.getElementById('status')
@@ -125,24 +123,24 @@ fetch(url)
         }
         
     
-    //     if (option == 'edit') {    
-    //         fetch(url + idForm, {
-    //             method: 'PUT',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({
-    //                 task: task.value,
-    //                 description: description.value,
-    //                 status: status.value
-    //             })
-    //         })
-    //         .then(response => response.json())
-    //         //.then(() => location.reload())
-    //         .catch(error => console.log(error));
-    //     }
+        if (option == 'edit') {    
+            fetch(url + idForm, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    task: task.value,
+                    description: description.value,
+                    status: status.value
+                })
+            })
+            .then(response => response.json())
+            //.then(() => location.reload())
+            .catch(error => console.log(error));
+        }
     
-    //     modalArticle.hide();
+        modalArticle.hide();
      });
     
     
