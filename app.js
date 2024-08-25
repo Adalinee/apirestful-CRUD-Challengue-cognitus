@@ -1,7 +1,11 @@
-var express = require('express');
-var mysql = require('mysql');
+const express = require('express');
+const cors = require('cors');
+const mysql = require('mysql');
+const app = express();
+const port = 3000;
 
-var app = express();
+// Configura CORS para permitir solicitudes desde cualquier origen
+app.use(cors());
 app.use(express.json()); // Permite procesar solicitudes con cuerpo en formato JSON
 
 // Se establece la conexión
@@ -25,7 +29,7 @@ app.get('/', function (req, res) {
     res.send('Hello World');
 });
 
-// Mostrar todos los artículos
+// Mostrar todas las tareas
 app.get('/api/task', (req, res) => {
     conexion.query('SELECT * FROM tarea', (error, rows) => {
         if (error) {
@@ -51,16 +55,16 @@ app.get('/api/task/:id', (req, res) => {
 
 // Crear una nueva tarea
 app.post('/api/task/', (req, res) => {
-    const { task, description, status } = req.body;
+    const { task, description } = req.body;
 
     // Validación básica
-    if (!task || !description || status === undefined) {
+    if (!task || !description) {
         return res.status(400).send({
-            error: "Todos los campos 'task', 'description' y 'status' son requeridos"
+            error: "Todos los campos 'task', 'description'"
         });
     }
 
-    let data = { task, description, status };
+    let data = { task, description};
     let sql = "INSERT INTO tarea SET ?";
     conexion.query(sql, data, function (error, results) {
         if (error) {
